@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
 import { makeStyles } from '@material-ui/core/styles';
+const backendURL = 'http://localhost:5000';
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -42,6 +43,26 @@ const useStyles = makeStyles(theme => ({
 
 export default function App() {
   const classes = useStyles();
+  const [name, setName] = useState('');
+
+  function handleSubmit(e){
+    e.preventDefault();
+    if(name.trim){
+      fetch(backendURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({name})
+      }).then(response => {
+        return response.json()
+      }).then(data => {
+        console.log(data);
+      })
+
+    }
+  }
+
 
   const baseNo = 29;
   return (
@@ -77,11 +98,15 @@ export default function App() {
           <Typography component="h1" variant="h5">
             Create a private key 
           </Typography>
-          <form className={classes.form} noValidate>
+          <form 
+            className={classes.form} 
+            onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
               fullWidth
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               label="Enter your name to create a key"
               name="name"
               autoFocus/>
