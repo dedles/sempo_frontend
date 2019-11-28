@@ -49,10 +49,12 @@ export default function App() {
               <br/><br/>
               This app will generate a private key on the backend and return it in a base {baseNo} string of emojis, for easier memorization.
             </Typography>
+            
             <br/>
+
             <Grid component="label" container justify="center" alignItems="center" spacing={1}>
               <Grid item>
-                Create Private Key
+                Create private key
               </Grid>
               <Grid item>
                 <Switch
@@ -63,12 +65,13 @@ export default function App() {
                   />
               </Grid>
               <Grid item>
-                Submit Emoji Key
+                Get name from emoji
               </Grid>
             </Grid>
           </Container>
         </div>
-        <KeyCreate />
+
+        <KeyCreate emojiSubmit={check} />
       
       </main>
 
